@@ -1,0 +1,38 @@
+{
+  "name": "e-commerce",
+  "version": "1.0.0",
+  "description": "E-commerce Demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --mode=development --hot --open",
+    "build": "cross-env NODE_ENV=production webpack --mode=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/linfuxiang/E-commerce.git"
+  },
+  "keywords": [
+    "E-commerce"
+  ],
+  "author": "LFX",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/linfuxiang/E-commerce/issues"
+  },
+  "homepage": "https://github.com/linfuxiang/E-commerce#readme",
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "css-loader": "^1.0.0",
+    "node-sass": "^4.9.2",
+    "sass-loader": "^7.1.0",
+    "vue-loader": "^15.2.6",
+    "vue-template-compiler": "^2.5.17",
+    "webpack": "^4.16.4",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.5"
+  },
+  "dependencies": {
+    "vue": "^2.5.17"
+  }
+}
