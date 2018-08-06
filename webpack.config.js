@@ -1,19 +1,29 @@
 const path = require('path')
 const webpack = require('webpack')
 const { VueLoaderPlugin } = require('vue-loader')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+let devMode = process.env.NODE_ENV !== 'production'
 
 module.exports = {
     entry: './src/main.js',
     output: {
         path: path.resolve(__dirname, './dist'),
-        publicPath: '/dist/',
+        publicPath: './dist/',
         filename: 'build.js'
     },
     module: {
         rules: [{
                 test: /\.css$/,
                 use: [
-                    'vue-style-loader',
+                    devMode ?
+                    'vue-style-loader' : {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            publicPath: './'
+                        }
+                    },
                     'css-loader',
                     'postcss-loader',
                 ],
@@ -21,7 +31,13 @@ module.exports = {
             {
                 test: /\.scss$/,
                 use: [
-                    'vue-style-loader',
+                    devMode ?
+                    'vue-style-loader' : {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            publicPath: './'
+                        }
+                    },
                     'css-loader',
                     'postcss-loader',
                     'sass-loader',
@@ -30,7 +46,13 @@ module.exports = {
             {
                 test: /\.sass$/,
                 use: [
-                    'vue-style-loader',
+                    devMode ?
+                    'vue-style-loader' : {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+                            publicPath: ' ./'
+                        }
+                    },
                     'css-loader',
                     'postcss-loader',
                     'sass-loader?indentedSyntax',
@@ -86,10 +108,17 @@ module.exports = {
     devtool: '#eval-source-map',
     plugins: [
         new VueLoaderPlugin(),
+        new MiniCssExtractPlugin({
+            // filename: devMode ? '[name].css' : '[name].[hash].css',
+            // chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
+            filename: '[name].css',
+            chunkFilename: '[id].css'
+        }),
+        new HtmlWebpackPlugin(),
     ],
 }
 // console.log(process.env.NODE_ENV)
 
-if (process.env.NODE_ENV === 'production') {
+if (!devMode) {
     module.exports.devtool = '#source-map'
 }
