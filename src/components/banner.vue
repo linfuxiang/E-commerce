@@ -43,13 +43,16 @@ export default {
 .banner {
     width: 100%;
     height: 50px;
-    font-size: 24px;
+    font-size: 36px;
     line-height: 50px;
     display: flex;
+    overflow-x: auto;
+    border-bottom: 1px solid red;
     p {
         margin: 0;
         display: inline-block;
         margin: 0 20px;
+        width: 200px;
         &.active {
             color: red;
         }
