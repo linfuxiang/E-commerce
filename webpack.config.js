@@ -14,7 +14,8 @@ module.exports = {
                 test: /\.css$/,
                 use: [
                     'vue-style-loader',
-                    'css-loader'
+                    'css-loader',
+                    'postcss-loader',
                 ],
             },
             {
@@ -22,7 +23,8 @@ module.exports = {
                 use: [
                     'vue-style-loader',
                     'css-loader',
-                    'sass-loader'
+                    'postcss-loader',
+                    'sass-loader',
                 ],
             },
             {
@@ -30,7 +32,8 @@ module.exports = {
                 use: [
                     'vue-style-loader',
                     'css-loader',
-                    'sass-loader?indentedSyntax'
+                    'postcss-loader',
+                    'sass-loader?indentedSyntax',
                 ],
             }, {
                 test: /\.vue$/,
@@ -53,19 +56,24 @@ module.exports = {
                 //     }
                 //     // other vue-loader options go here
                 // }
+            }, {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/,
             },
         ],
     },
     resolve: {
         alias: {
-            'vue$': 'vue/dist/vue.esm.js'
+            'vue$': 'vue/dist/vue.esm.js',
+            '@src': path.resolve(__dirname, './src'),
         },
         extensions: ['*', '.js', '.vue', '.json']
     },
     devServer: {
         // contentBase: path.join(__dirname, "dist"), // 静态资源路径
         // compress: true, // 使用gzip压缩
-        port: 9000,
+        port: 9999,
         historyApiFallback: true, // 当使用 HTML5 History API 时，任意的 404 响应都可能需要被替代为 index.html
         noInfo: true, // 每次重新构建时，清除上次的webpack输出的信息
         overlay: true, // 在浏览器全屏输出错误
