@@ -29,7 +29,7 @@ export default {
 <style>
 button {
     font-size: 36px;
-    border: 1px solid red;
+    border: 1px solid red;/*no*/
     border-radius: 5px;
 }
 </style>

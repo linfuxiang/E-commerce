@@ -5,9 +5,6 @@ Vue.use(VueRouter)
 const routes = [{
     path: '/',
     name: 'index',
-    // component(resolve) {
-    //     require(['@src/views/index/index'], resolve)
-    // },
     component: () => import('@src/views/index/index'),
     children: [{
         path: '',
