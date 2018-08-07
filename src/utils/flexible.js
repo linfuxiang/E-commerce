@@ -18,21 +18,31 @@
     }
     scale = 1 / dpr;
 
-    let htmlFontSize = doc.documentElement.clientWidth / 10;
-    console.log(htmlFontSize)
-    console.log(doc.documentElement.style)
-    doc.documentElement.style.fontSize = htmlFontSize * dpr + 'px';
+    function setFontSize() {
+        let htmlFontSize = doc.documentElement.clientWidth / 10;
+        console.log(htmlFontSize)
+        doc.documentElement.style.fontSize = htmlFontSize * dpr + 'px';
+    }
 
-    // 设置viewport
-    let meta;
-    let content = `width=device-width,user-scalable=no,initial-scale=${scale},maximum-scale=${scale},minimum-scale=${scale}`;
-    if (doc.querySelector('meta[name="viewport"]')) {
-        meta = doc.querySelector('meta[name="viewport"]');
-        meta.setAttribute('content', content);
-    } else {
-        meta = doc.createElement('meta');
-        meta.setAttribute('name', 'viewport');
-        meta.setAttribute('content', content);
-        doc.head.appendChild(meta);
-    }  
+    function setViewport() {
+        // 设置viewport
+        let meta;
+        let content = `width=device-width,user-scalable=no,initial-scale=${scale},maximum-scale=${scale},minimum-scale=${scale}`;
+        if (doc.querySelector('meta[name="viewport"]')) {
+            meta = doc.querySelector('meta[name="viewport"]');
+            meta.setAttribute('content', content);
+        } else {
+            meta = doc.createElement('meta');
+            meta.setAttribute('name', 'viewport');
+            meta.setAttribute('content', content);
+            doc.head.appendChild(meta);
+        }
+    }
+
+    win.addEventListener('resize', function() {
+        setFontSize();
+        setViewport();
+    });
+    setFontSize();
+    setViewport();
 })(window, document);
