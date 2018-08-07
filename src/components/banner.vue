@@ -1,6 +1,6 @@
 <template>
     <div class="banner">
-        <router-link v-for="(title, index) in options" :to="{name: title.url}" :key="title.url">
+        <router-link v-for="(title, index) in options" :to="{path: '/' + title.url}" :key="title.url">
             <p :class="{active: active == title.desc}">{{ title.desc }}</p>
         </router-link>
     </div>
@@ -11,20 +11,20 @@ export default {
         return {
             name: 'banner',
             options: [{
-                desc: 'index',
-                url: 'index',
+                desc: '首页',
+                url: '',
             }, {
-                desc: 'foo',
-                url: 'foo'
+                desc: '产品',
+                url: 'list'
             }, {
-                desc: 'bar',
-                url: 'bar'
+                desc: '我的',
+                url: 'user'
             }]
         }
     },
     props: {
         active: {
-            default: 'index',
+            default: 'main',
         }
     },
     methods: {
@@ -52,10 +52,11 @@ export default {
         margin: 0;
         display: inline-block;
         margin: 0 20px;
-        width: 200px;
-        &.active {
-            color: red;
-        }
+        width: 120px;
     }
+}
+
+.router-link-exact-active {
+    color: red;
 }
 </style>

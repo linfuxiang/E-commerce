@@ -1,21 +1,17 @@
 <template>
     <div class="banner">
-        <banner :active="name"></banner>
         {{ name }}
     </div>
 </template>
 <script>
-import banner from '../components/banner'
 export default {
     data() {
         return {
-            name: 'foo'
+            name: 'main'
         }
     },
-    components: {
-        banner,
+    methods: {
     },
-    methods: {},
     mounted() {
         this.bus.$on('boardcast', (msg) => {
             console.log(`${this.name}:${msg}`)

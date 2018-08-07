@@ -1,19 +1,14 @@
 <template>
     <div class="banner">
-        <banner :active="name"></banner>
         {{ name }}
     </div>
 </template>
 <script>
-import banner from '../components/banner'
 export default {
     data() {
         return {
-            name: 'bar'
+            name: 'user'
         }
-    },
-    components: {
-        banner,
     },
     methods: {},
     mounted() {

@@ -20,7 +20,7 @@
 
     function setFontSize() {
         let htmlFontSize = doc.documentElement.clientWidth / 10;
-        console.log(htmlFontSize)
+        // console.log(htmlFontSize)
         doc.documentElement.style.fontSize = htmlFontSize * dpr + 'px';
     }
 

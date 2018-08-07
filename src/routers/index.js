@@ -5,21 +5,27 @@ Vue.use(VueRouter)
 const routes = [{
     path: '/',
     name: 'index',
-    component(resolve) {
-        require(['../views/index'], resolve)
-    }
+    // component(resolve) {
+    //     require(['@src/views/index/index'], resolve)
+    // },
+    component: () => import('@src/views/index/index'),
+    children: [{
+        path: '',
+        name: 'main',
+        component: () => import('@src/views/index/main'),
+    }, {
+        path: 'list',
+        name: 'list',
+        component: () => import('@src/views/index/list'),
+    }, {
+        path: 'user',
+        name: 'user',
+        component: () => import('@src/views/index/user'),
+    }]
 }, {
-    path: '/foo',
-    name: 'foo',
-    component(resolve) {
-        require(['../views/foo'], resolve)
-    }
-}, {
-    path: '/bar',
-    name: 'bar',
-    component(resolve) {
-        require(['../views/bar'], resolve)
-    }
+    path: '/sub',
+    name: 'sub',
+    component: () => import('@src/views/sub/index'),
 }]
 
 export default new VueRouter({

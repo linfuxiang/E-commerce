@@ -1,6 +1,6 @@
 <template>
     <div>
-        <router-view :is=""></router-view>
+        <router-view></router-view>
         <button @click="boardcast">广播</button>
     </div>
 </template>
