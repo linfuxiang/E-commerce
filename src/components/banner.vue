@@ -45,9 +45,8 @@ export default {
     width: 100%;
     font-size: 36px;
     display: flex;
-    overflow-x: auto;
     border-bottom: 1px solid red;
-    border-bottom: 1px solid red;/*no*/
+    overflow-x: auto;
     p {
         margin: 0;
         display: inline-block;
