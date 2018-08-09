@@ -1,8 +1,9 @@
 <template>
-    <div class="banner">
+    <div class="banner border-b">
         <router-link v-for="(title, index) in options" :to="{path: '/' + title.url}" :key="title.url">
             <p :class="{active: active == title.desc}">{{ title.desc }}</p>
         </router-link>
+        <!-- <div class="logo"></div> -->
     </div>
 </template>
 <script>
@@ -42,17 +43,17 @@ export default {
 <style scoped lang="scss">
 .banner {
     width: 100%;
-    height: 50px;
     font-size: 36px;
-    line-height: 50px;
     display: flex;
     overflow-x: auto;
     border-bottom: 1px solid red;
+    border-bottom: 1px solid red;/*no*/
     p {
         margin: 0;
         display: inline-block;
         margin: 0 20px;
         width: 120px;
+        line-height: 50px;
     }
 }
 

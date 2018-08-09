@@ -73,7 +73,8 @@ module.exports = {
             if (config && config.usingPercentage) {
                 scale = 1;
             }
-            return 'initial-scale=' + scale + ',maximum-scale=' + scale + ',minimum-scale=' + scale + ',user-scalable=no';
+            // return 'initial-scale=' + scale + ',maximum-scale=' + scale + ',minimum-scale=' + scale + ',user-scalable=no';
+            return 'initial-scale=' + 1 + ',maximum-scale=' + 1 + ',minimum-scale=' + 1 + ',user-scalable=no';
         }
         return dpr;
     },

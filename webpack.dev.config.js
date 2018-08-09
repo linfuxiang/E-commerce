@@ -28,6 +28,13 @@ module.exports = {
                     'css-loader',
                     'postcss-loader',
                     'sass-loader',
+                    {
+                        loader: 'sass-resources-loader',
+                        options: {
+                            //需要一个全局路径
+                            resources: [path.resolve(__dirname, './src/styles/base.scss')]
+                        }
+                    },
                 ],
             },
             {
@@ -37,6 +44,13 @@ module.exports = {
                     'css-loader',
                     'postcss-loader',
                     'sass-loader?indentedSyntax',
+                    {
+                        loader: 'sass-resources-loader',
+                        options: {
+                            //需要一个全局路径
+                            resources: [path.resolve(__dirname, './src/styles/base.scss')]
+                        }
+                    },
                 ],
             }, {
                 test: /\.vue$/,

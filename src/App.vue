@@ -5,7 +5,6 @@
     </div>
 </template>
 <script>
-import './styles/base.scss'
 export default {
     data() {
         return {
@@ -26,10 +25,9 @@ export default {
     },
 }
 </script>
-<style>
+<style lang="scss">
 button {
     font-size: 36px;
-    border: 1px solid red;/*no*/
-    border-radius: 5px;
+    // border: 1px solid red;
 }
 </style>
