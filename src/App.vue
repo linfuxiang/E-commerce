@@ -1,7 +1,7 @@
 <template>
     <div>
         <router-view></router-view>
-        <button @click="boardcast">广播</button>
+        <button class="border-a" @click="boardcast">广播</button>
     </div>
 </template>
 <script>
@@ -28,6 +28,8 @@ export default {
 <style lang="scss">
 button {
     font-size: 36px;
-    // border: 1px solid red;
+    // border: 1px solid red;/*no*/
+    border: none;
+    color: #000;
 }
 </style>

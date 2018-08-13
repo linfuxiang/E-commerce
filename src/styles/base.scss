@@ -20,31 +20,84 @@ $lightBlack: #98989f;
     }
 }
 
-@mixin border1px($color, $station: null) {
-    border: 0;
-    @if $station !=null {
-        border-#{$station}: 1px solid;
-    }
-    @else {
-        border: 1px solid;
-    }
-    border-image: svg(1px-border param(--color #{$color})) 1 stretch;
+.border-a {
+	position: relative;
+	border-radius: 5px;
+	border: 1px solid red;/*no*/
+	background: transparent;
+	@media screen and (-webkit-min-device-pixel-ratio: 2) {
+		border-radius: 0;
+		border: none;
+		background: transparent;
+		&::after {
+			display: block;
+	        content: '';
+	        position: absolute;
+	        top: 0;
+	        left: 0;
+	        transform-origin: 0 0;
+	        z-index: -1;
+	        border: 1px solid red;/*no*/
+	        background: transparent;
+		}
+	}
+	@media screen and (-webkit-min-device-pixel-ratio: 2) {
+		&::after {
+			width: 200%;
+	        height: 200%;
+	        border-radius: 10px;
+	        transform: scale(0.5);
+		}
+	}
+	@media screen and (-webkit-min-device-pixel-ratio: 3) {
+		&::after {
+	        width: 300%;
+	        height: 300%;
+	        border-radius: 15px;
+	        transform: scale(0.3333);
+	    }
+	}
 }
 
-// @media screen and (min-device-pixel-ratio: 1) {
-//     .border-b {
-//         border: 1px solid red;/*no*/
-//     }
-// }
-
 // @media screen and (-webkit-min-device-pixel-ratio: 2) {
-//     .border-b {
-//         border: 0;
-//         background-repeat: repeat-x;
-//         background-size: 100% 1px;
-//         background-position: 0 100%;
-//         background-image: linear-gradient(180deg, transparent 50%, red 0);
+// 	.border-a {
+// 		position: relative;
+		
+// 	}
+//     .border-a::after {
+//         display: block;
+//         content: '';
+//         position: absolute;
+//         top: 0;
+//         left: 0;
+//         width: 200%;
+//         height: 200%;
+//         border: 1px solid red;/*no*/
+//         border-radius: 10px;
+//         transform: scale(0.5);
+//         transform-origin: 0 0;
+//         background: green;
+//         z-index: -1;
 //     }
 // }
 
-// @media screen and (min-device-pixel-ratio: 3) {}
+// @media screen and (min-device-pixel-ratio: 3) {
+// 	.border-a {
+// 		position: relative;
+// 	}
+//     .border-a::after {
+//         display: block;
+//         content: '';
+//         position: absolute;
+//         top: 0;
+//         left: 0;
+//         width: 300%;
+//         height: 300%;
+//         border: 1px solid red;/*no*/
+//         border-radius: 15px;
+//         transform: scale(0.3333);
+//         transform-origin: 0 0;
+//         background: green;
+//         z-index: -1;
+//     }
+// }

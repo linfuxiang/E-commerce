@@ -1,4 +1,20 @@
 var postcss = require('postcss');
+
+function hasComment(rule, nextRule, keepPxComment) {
+    if (rule &&
+        typeof rule === 'object' &&
+        rule.type === 'decl' &&
+        /^border(\-(top|left|bottom|right))*$/.test(rule.prop) &&
+        /^.+ .+ .+$/.test(rule.value) &&
+        nextRule &&
+        typeof nextRule === 'object' &&
+        nextRule.type === 'comment' &&
+        nextRule.text.trim() === keepPxComment
+    ) {
+        return true;
+    }
+    return false;
+}
 module.exports = postcss.plugin('postcss-border1px', function(opts) {
     opts = opts || {};
     opts.keepPxComment = opts.keepPxComment || 'no';
@@ -6,43 +22,38 @@ module.exports = postcss.plugin('postcss-border1px', function(opts) {
     return function(css, result) {
         // 遍历rules
         css.walkRules(function(rule) {
-            let rules = [];
-            let declWillDelete = [];
+            let res = [];
             // console.log(rule.nodes)
             // 寻找border[-top|left|bottom|right]属性
             rule.nodes.forEach(function(decl, idx, _this) {
-                // console.log(decl.type, decl.text);
-                // 对/*no*/注释不进行编译
-                if (rules.length &&
-                    decl &&
-                    decl.type == 'comment' &&
-                    decl.text == opts.keepPxComment &&
-                    _this[idx - 1] &&
-                    _this[idx - 1].type == 'decl' &&
-                    /^border(\-(top|left|bottom|right))?$/.test(_this[idx - 1].prop) &&
-                    /^.+ .+ .+$/.test(_this[idx - 1].value)) {
-                    console.log(111)
-                    rules.splice(-3, 3);
-                    declWillDelete.pop();
-                    return;
-                }
-
-                if (!/^border(\-(top|left|bottom|right))?$/.test(decl.prop)) {
+                // 只识别border[-top|-right|-bottom|-left]: 1px solid [color];
+                if (!/^border(\-(top|left|bottom|right))*$/.test(decl.prop)) {
                     return;
                 }
                 if (!/^.+ .+ .+$/.test(decl.value)) {
                     return;
                 }
-                // console.log(rule.nodes)
-                // 新增属性：
-                // border: 0;
+                // 如果带有注释/*no*/，则忽略
+                if (hasComment(rule.nodes[idx], rule.nodes[idx + 1], opts.keepPxComment)) {
+                    return;
+                }
+
+                let rules = [];
+                // 新增以下三个属性：
+                // 1. border: 0;
                 rules.push({ prop: 'border', value: '0' });
 
-                // border[-top...]: 1px solid;
-                let arr = decl.prop.split('-');
-                rules.push({ prop: 'border' + (arr[1] ? '-' + arr[1] : ''), value: '1px solid' });
+                // 2. border[-top...]: 1px solid;
+                let attrs = decl.prop.match(/(top|left|bottom|right)/g);
+                if (attrs) {
+                    for (let i = 0; i < attrs.length; i++) {
+                    	rules.push({ prop: 'border-' + attrs[i], value: '1px solid' });
+                    }
+                } else {
+                	rules.push({ prop: 'border', value: '1px solid' });
+                }
 
-                // border-image: svg(1px-border param(--color ${color})) 1 stretch;
+                // 3. border-image: svg(1px-border param(--color ${color})) 1 stretch;
                 let color;
                 decl.value.split(' ').forEach(function(it) {
                     if (!/\dpx/.test(it) && !/(solid)|(dashed)|(dotted)/.test(it)) {
@@ -51,19 +62,21 @@ module.exports = postcss.plugin('postcss-border1px', function(opts) {
                 });
                 color = color || '#e4e6e7';
                 rules.push({ prop: 'border-image', value: `svg(1px-border param(--color ${color})) 1 stretch` });
-                declWillDelete.push(decl);
-            })
-            // rule.walkDecls(/^border(\-(top|left|bottom|right))?$/, function(decl) {
 
-            // });
-            // console.log(rules, declWillDelete)
-            declWillDelete.forEach(function(it) {
-                it.remove();
-            })
-            rules.forEach(function(it) {
-                rule.append({ prop: it.prop, value: it.value });
+                // push到结果数组
+                res.push({
+                    rules,
+                    declWillDelete: decl
+                });
             });
-            // console.log(rules);
+
+            // 添加新属性并删除旧属性
+            res.forEach(function(it) {
+                for (let i = 0; i < it.rules.length; i++) {
+                    it.declWillDelete.before({ prop: it.rules[i].prop, value: it.rules[i].value });
+                }
+                it.declWillDelete.remove();
+            });
         });
         // 转化CSS 的功能代码
     };

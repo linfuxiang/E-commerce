@@ -1,13 +1,11 @@
 let autoprefixer = require('autoprefixer')
 let pxtorem = require('postcss-pxtorem')
-// let borderwidth = require('postcss-border-width')
 let border1px = require('./plugins/postcss-border1px')
 let writesvg = require('postcss-write-svg')
 module.exports = {
     plugins: [
         border1px(),
         writesvg(),
-        // borderwidth({}),
         autoprefixer({
             browsers: ['last 20 versions', 'Android >= 4.0'],
             cascade: true,
