@@ -20,11 +20,11 @@ $lightBlack: #98989f;
     }
 }
 
-.border-a {
+@mixin border-radius($width, $style, $color, $radius, $bgColor: transparent) {
 	position: relative;
-	border-radius: 5px;
-	border: 1px solid red;/*no*/
-	background: transparent;
+	border-radius: $radius;
+	border: $width $style $color;/*no*/
+	background: $bgColor;
 	@media screen and (-webkit-min-device-pixel-ratio: 2) {
 		border-radius: 0;
 		border: none;
@@ -37,15 +37,15 @@ $lightBlack: #98989f;
 	        left: 0;
 	        transform-origin: 0 0;
 	        z-index: -1;
-	        border: 1px solid red;/*no*/
-	        background: transparent;
+	        border: $width $style $color;/*no*/
+	        background: $bgColor;
 		}
 	}
 	@media screen and (-webkit-min-device-pixel-ratio: 2) {
 		&::after {
 			width: 200%;
 	        height: 200%;
-	        border-radius: 10px;
+	        border-radius: $radius * 2;
 	        transform: scale(0.5);
 		}
 	}
@@ -53,51 +53,8 @@ $lightBlack: #98989f;
 		&::after {
 	        width: 300%;
 	        height: 300%;
-	        border-radius: 15px;
+	        border-radius: $radius * 3;
 	        transform: scale(0.3333);
 	    }
 	}
 }
-
-// @media screen and (-webkit-min-device-pixel-ratio: 2) {
-// 	.border-a {
-// 		position: relative;
-		
-// 	}
-//     .border-a::after {
-//         display: block;
-//         content: '';
-//         position: absolute;
-//         top: 0;
-//         left: 0;
-//         width: 200%;
-//         height: 200%;
-//         border: 1px solid red;/*no*/
-//         border-radius: 10px;
-//         transform: scale(0.5);
-//         transform-origin: 0 0;
-//         background: green;
-//         z-index: -1;
-//     }
-// }
-
-// @media screen and (min-device-pixel-ratio: 3) {
-// 	.border-a {
-// 		position: relative;
-// 	}
-//     .border-a::after {
-//         display: block;
-//         content: '';
-//         position: absolute;
-//         top: 0;
-//         left: 0;
-//         width: 300%;
-//         height: 300%;
-//         border: 1px solid red;/*no*/
-//         border-radius: 15px;
-//         transform: scale(0.3333);
-//         transform-origin: 0 0;
-//         background: green;
-//         z-index: -1;
-//     }
-// }

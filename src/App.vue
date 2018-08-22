@@ -1,7 +1,8 @@
 <template>
     <div>
         <router-view></router-view>
-        <button class="border-a" @click="boardcast">广播</button>
+        <button @click="boardcast">广播</button>
+        <button @click="request">Ajax</button>
     </div>
 </template>
 <script>
@@ -14,13 +15,19 @@ export default {
     methods: {
         boardcast() {
             this.bus.$emit('boardcast', 'hey my sons.');
-        }
+        },
+        request() {
+            this.axios.get('/api/user')
+                .then(res => {
+                    console.log(res);
+                });
+        },
     },
     mounted() {
         // this.$root.eventHandler.$on('changeTab', function (opt) {
-        // 	if() {
+        //  if() {
 
-        // 	}
+        //  }
         // });
     },
 }
@@ -28,8 +35,7 @@ export default {
 <style lang="scss">
 button {
     font-size: 36px;
-    // border: 1px solid red;/*no*/
-    border: none;
+    @include border-radius(1px, solid, red, 5px, green);
     color: #000;
 }
 </style>

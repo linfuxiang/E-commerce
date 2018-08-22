@@ -2,6 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const { VueLoaderPlugin } = require('vue-loader')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const apiMocker = require('webpack-api-mocker')
 
 let devMode = process.env.NODE_ENV !== 'production'
 
@@ -95,6 +96,9 @@ module.exports = {
         noInfo: true, // 每次重新构建时，清除上次的webpack输出的信息
         overlay: true, // 在浏览器全屏输出错误
         // openPage: '',
+        before(app) {
+            apiMocker(app, path.resolve('./src/mocker/index.js'))
+        },
     },
     performance: {
         // hints: "warning"
